@@ -87,7 +87,7 @@
                         </div>
                         <div class="feature">
                             <span class="feature-icon">🔮</span>
-                            <span>5-Year Future Predictions</span>
+                            <span>Single Report with 5-Year Predictions</span>
                         </div>
                         <div class="feature">
                             <span class="feature-icon">💫</span>
@@ -130,7 +130,7 @@
                         </div>
                         <div class="feature">
                             <span class="feature-icon">🔮</span>
-                            <span>5-Year Future Predictions</span>
+                            <span>Single Report with 5-Year Predictions</span>
                         </div>
                         <div class="feature">
                             <span class="feature-icon">💡</span>
@@ -161,7 +161,7 @@
                     <div class="card-features">
                         <div class="feature">
                             <span class="feature-icon">🔮</span>
-                            <span>Detailed 5-Year Predictions</span>
+                            <span>Single Report with 5-Year Predictions</span>
                         </div>
                         <div class="feature">
                             <span class="feature-icon">🛡️</span>
@@ -212,7 +212,7 @@
                                     <div class="option-icon">👤</div>
                                     <div class="option-text">
                                         <h4>Individual Report</h4>
-                                        <p>Discover your unique spiritual path</p>
+                                        <p>Single report with your spiritual insights</p>
                                         <span class="option-price">₹50</span>
                                     </div>
                                 </div>
@@ -224,7 +224,7 @@
                                     <div class="option-icon">💕</div>
                                     <div class="option-text">
                                         <h4>Couple Compatibility</h4>
-                                        <p>Understand your relationship dynamics</p>
+                                        <p>Single report with relationship insights</p>
                                         <span class="option-price">₹100</span>
                                     </div>
                                 </div>
@@ -236,7 +236,7 @@
                                     <div class="option-icon">🔮</div>
                                     <div class="option-text">
                                         <h4>5-Year Future Report</h4>
-                                        <p>Detailed predictions with remedies</p>
+                                        <p>Single report with detailed predictions & remedies</p>
                                         <span class="option-price">₹200</span>
                                     </div>
                                 </div>
@@ -339,20 +339,28 @@
 
                             <div class="payment-methods">
                                                             <div class="qr-section">
-                                <h4>Scan QR Code to Pay</h4>
-                                <img src="assets/qr.jpg" alt="Payment QR Code" class="qr-code">
-                                <p class="qr-text">Scan with any UPI app</p>
-                                <p class="qr-note">Secure payment processing</p>
+                                <h4>Pay via UPI</h4>
+                                <div class="upi-payment">
+                                    <div class="upi-id">
+                                        <span class="upi-label">UPI ID:</span>
+                                        <span class="upi-value">ankit.gautam42@ybl</span>
+                                        <button class="copy-btn" onclick="copyUPI()">📋 Copy</button>
+                                    </div>
+                                    <div class="amount-display">
+                                        <span class="amount-label">Amount:</span>
+                                        <span class="amount-value" id="displayAmount">₹50</span>
+                                    </div>
+                                    <button class="pay-btn" onclick="openUPI()">
+                                        💳 Pay Now
+                                    </button>
+                                    <p class="payment-note">Click "Pay Now" to open your UPI app</p>
+                                </div>
                             </div>
 
-                                <div class="upload-section">
-                                    <label for="screenshot" class="upload-label">
-                                        <span class="upload-icon">📸</span>
-                                        <span>Upload Payment Screenshot</span>
-                                    </label>
-                                    <input type="file" id="screenshot" accept="image/*" required>
-                                    <div class="file-name" id="fileName"></div>
-                                    <div class="upload-hint">Screenshot of successful payment</div>
+                                <div class="payment-status">
+                                    <div class="status-message">
+                                        <p>✅ Payment completed? Click "Generate Report" below</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
