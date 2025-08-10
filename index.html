@@ -338,24 +338,34 @@
                             </div>
 
                             <div class="payment-methods">
-                                                            <div class="qr-section">
-                                <h4>Pay via UPI</h4>
-                                <div class="upi-payment">
-                                    <div class="upi-id">
-                                        <span class="upi-label">UPI ID:</span>
-                                        <span class="upi-value">ankit.gautam42@ybl</span>
-                                        <button class="copy-btn" onclick="copyUPI()">📋 Copy</button>
+                                <div class="upi-section">
+                                    <h4>Pay via UPI</h4>
+                                    <div class="upi-payment">
+                                        <div class="upi-id">
+                                            <span class="upi-label">UPI ID:</span>
+                                            <span class="upi-value">ankit.gautam42@ybl</span>
+                                            <button class="copy-btn" onclick="copyUPI()">📋 Copy</button>
+                                        </div>
+                                        <div class="amount-display">
+                                            <span class="amount-label">Amount:</span>
+                                            <span class="amount-value" id="displayAmount">₹50</span>
+                                        </div>
+                                        <button class="pay-btn" onclick="openUPI()">
+                                            💳 Pay Now
+                                        </button>
+                                        <p class="payment-note">Click "Pay Now" to open your UPI app</p>
+                                        <div class="payment-instructions">
+                                            <h5>📱 How to Pay:</h5>
+                                            <ol>
+                                                <li>Click "Pay Now" button above</li>
+                                                <li>Your UPI app will open automatically</li>
+                                                <li>Verify amount: <strong id="verifyAmount">₹50</strong></li>
+                                                <li>Complete payment</li>
+                                                <li>Return here and click "Generate Report"</li>
+                                            </ol>
+                                        </div>
                                     </div>
-                                    <div class="amount-display">
-                                        <span class="amount-label">Amount:</span>
-                                        <span class="amount-value" id="displayAmount">₹50</span>
-                                    </div>
-                                    <button class="pay-btn" onclick="openUPI()">
-                                        💳 Pay Now
-                                    </button>
-                                    <p class="payment-note">Click "Pay Now" to open your UPI app</p>
                                 </div>
-                            </div>
 
                                 <div class="payment-status">
                                     <div class="status-message">

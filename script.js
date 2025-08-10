@@ -75,19 +75,27 @@ function updateOrderSummary() {
     const orderType = document.getElementById('orderType');
     const orderPrice = document.getElementById('orderPrice');
     const orderTotal = document.getElementById('orderTotal');
+    const displayAmount = document.getElementById('displayAmount');
+    const verifyAmount = document.getElementById('verifyAmount');
 
     if (reportType === 'couple') {
-        orderType.textContent = 'Couple Compatibility Report';
+        orderType.textContent = 'Couple Compatibility Report (Single Report)';
         orderPrice.textContent = '₹100';
         orderTotal.textContent = '₹100';
+        if (displayAmount) displayAmount.textContent = '₹100';
+        if (verifyAmount) verifyAmount.textContent = '₹100';
     } else if (reportType === 'future') {
-        orderType.textContent = '5-Year Future Report with Remedies';
+        orderType.textContent = '5-Year Future Report with Remedies (Single Report)';
         orderPrice.textContent = '₹200';
         orderTotal.textContent = '₹200';
+        if (displayAmount) displayAmount.textContent = '₹200';
+        if (verifyAmount) verifyAmount.textContent = '₹200';
     } else {
-        orderType.textContent = 'Individual Report';
+        orderType.textContent = 'Individual Report (Single Report)';
         orderPrice.textContent = '₹50';
         orderTotal.textContent = '₹50';
+        if (displayAmount) displayAmount.textContent = '₹50';
+        if (verifyAmount) verifyAmount.textContent = '₹50';
     }
 }
 
@@ -233,12 +241,8 @@ function validateCurrentStep(stepNumber) {
             return true;
             
         case 3:
-            // Step 3 validation - payment
-            const screenshot = document.getElementById('screenshot').files[0];
-            if (!screenshot) {
-                showError('Please upload your payment screenshot');
-                return false;
-            }
+            // Step 3 validation - payment confirmation
+            // No validation needed since user confirms payment completion
             return true;
             
         default:
@@ -342,7 +346,6 @@ function collectFormData() {
     const partnerDob = document.getElementById('partnerDob').value;
     const partnerGender = document.getElementById('partnerGender').value;
     const partnerTimeOfBirth = document.getElementById('partnerTimeOfBirth').value;
-    const screenshot = document.getElementById('screenshot').files[0];
     
     return {
         reportType,
@@ -353,15 +356,13 @@ function collectFormData() {
         partnerName: reportType === 'couple' ? partnerName : '',
         partnerDob: reportType === 'couple' ? partnerDob : '',
         partnerGender: reportType === 'couple' ? partnerGender : '',
-        partnerTimeOfBirth: reportType === 'couple' ? partnerTimeOfBirth : '',
-        screenshot
+        partnerTimeOfBirth: reportType === 'couple' ? partnerTimeOfBirth : ''
     };
 }
 
 function validateFormData(data) {
     if (!data.name || !data.dob || !data.gender) return false;
     if (data.reportType === 'couple' && (!data.partnerName || !data.partnerDob || !data.partnerGender)) return false;
-    if (!data.screenshot) return false;
     
     return true;
 }
@@ -725,7 +726,7 @@ function showAllSections() {
 
 function generateIndividualReportHTML(data) {
     return `
-        <h2>✨ Your Premium Spiritual Profile</h2>
+        <h2>✨ Your Premium Spiritual Profile (Single Report)</h2>
         
         <div class="profile-summary">
             <div class="summary-card">
@@ -834,7 +835,7 @@ function generateIndividualReportHTML(data) {
 
 function generateCoupleReportHTML(data) {
     return `
-        <h2>💕 Premium Couple Compatibility Report</h2>
+        <h2>💕 Premium Couple Compatibility Report (Single Report)</h2>
         
         <div class="compatibility-score">
             <span class="score">${data.compatibilityScore}%</span>
@@ -922,7 +923,7 @@ function generateCoupleReportHTML(data) {
 
 function generateFutureReportHTML(data) {
     return `
-        <h2>🔮 Your Premium 5-Year Future Report with Remedies</h2>
+        <h2>🔮 Your Premium 5-Year Future Report with Remedies (Single Report)</h2>
         
         <div class="profile-summary">
             <div class="summary-card">
@@ -1342,6 +1343,48 @@ function displayMessage(message, type) {
     resultSection.classList.add('fade-in');
 }
 
+function showToast(message, type = 'info') {
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.textContent = message;
+    
+    // Add toast styles
+    toast.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${type === 'success' ? '#4CAF50' : type === 'error' ? '#f44336' : '#2196F3'};
+        color: white;
+        padding: 12px 20px;
+        border-radius: 4px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 10000;
+        font-size: 14px;
+        font-weight: 500;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        max-width: 300px;
+        word-wrap: break-word;
+    `;
+    
+    document.body.appendChild(toast);
+    
+    // Animate in
+    setTimeout(() => {
+        toast.style.transform = 'translateX(0)';
+    }, 100);
+    
+    // Remove after 3 seconds
+    setTimeout(() => {
+        toast.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+            if (toast.parentNode) {
+                toast.parentNode.removeChild(toast);
+            }
+        }, 300);
+    }, 3000);
+}
+
 function resetForm() {
     // Reset form
     document.getElementById('reportForm').reset();
@@ -1422,6 +1465,88 @@ function formatDate(dateString) {
 window.nextStep = nextStep;
 window.prevStep = prevStep;
 window.goToHome = goToHome;
+window.copyUPI = copyUPI;
+window.openUPI = openUPI;
+
+function copyUPI() {
+    const upiId = 'ankit.gautam42@ybl';
+    navigator.clipboard.writeText(upiId).then(() => {
+        // Show success message
+        const copyBtn = document.querySelector('.copy-btn');
+        const originalText = copyBtn.textContent;
+        copyBtn.textContent = '✅ Copied!';
+        copyBtn.style.background = '#4CAF50';
+        copyBtn.style.color = 'white';
+        
+        setTimeout(() => {
+            copyBtn.textContent = originalText;
+            copyBtn.style.background = '';
+            copyBtn.style.color = '';
+        }, 2000);
+        
+        // Show toast notification
+        showToast('UPI ID copied to clipboard!', 'success');
+    }).catch(err => {
+        console.error('Failed to copy: ', err);
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = upiId;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        
+        showToast('UPI ID copied to clipboard!', 'success');
+    });
+}
+
+function openUPI() {
+    const amount = document.getElementById('displayAmount').textContent.replace('₹', '');
+    const upiId = 'ankit.gautam42@ybl';
+    
+    // Show instructions first
+    const instructions = `
+UPI Payment Instructions:
+1. Open your UPI app (GPay, PhonePe, Paytm, etc.)
+2. Send ₹${amount} to: ${upiId}
+3. Add note: "Spiritual Report"
+4. Complete payment
+5. Return here and click "Generate Report"
+
+Click OK to open your UPI app (if available)
+        `;
+    
+    if (confirm(instructions)) {
+        // Create UPI deep link with better parameters
+        const upiLink = `upi://pay?pa=${upiId}&pn=Pairfect&am=${amount}&cu=INR&tn=Spiritual Report&mc=0000&tr=${Date.now()}`;
+        
+        // Try multiple UPI app schemes for better compatibility
+        const upiSchemes = [
+            upiLink,
+            `googleplay://upi?pa=${upiId}&pn=Pairfect&am=${amount}&cu=INR&tn=Spiritual Report`,
+            `phonepe://pay?pa=${upiId}&pn=Pairfect&am=${amount}&cu=INR&tn=Spiritual Report`,
+            `paytm://pay?pa=${upiId}&pn=Pairfect&am=${amount}&cu=INR&tn=Spiritual Report`
+        ];
+        
+        // Try to open UPI app
+        let opened = false;
+        for (let scheme of upiSchemes) {
+            try {
+                window.location.href = scheme;
+                opened = true;
+                break;
+            } catch (error) {
+                console.log(`Failed to open scheme: ${scheme}`);
+                continue;
+            }
+        }
+        
+        // If no scheme worked, show manual instructions
+        if (!opened) {
+            alert(`Please manually open your UPI app and send ₹${amount} to ${upiId}\n\nNote: Spiritual Report`);
+        }
+    }
+}
 
 function goToHome() {
     // Reset form
